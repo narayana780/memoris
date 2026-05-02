@@ -1,0 +1,263 @@
+/* ─── QR Scanner Page ──────────────────────────────── */
+
+.scan-page {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  background: #000;
+  position: relative;
+}
+
+/* ── Header ── */
+.scan-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 18px 20px;
+  border-bottom: 1px solid rgba(212, 175, 55, 0.15);
+  flex-shrink: 0;
+}
+
+.scan-header h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.3rem;
+  color: var(--gold);
+  letter-spacing: 0.1em;
+  margin: 0;
+}
+
+/* ── Subtitle ── */
+.scan-subtitle {
+  text-align: center;
+  padding: 10px 24px 4px;
+  font-size: 0.82rem;
+  color: #555;
+  letter-spacing: 0.06em;
+}
+
+/* ── Body ── */
+.scan-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 16px 40px;
+  gap: 20px;
+}
+
+/* ── Section labels ── */
+.scan-section-label {
+  font-size: 0.7rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: #444;
+  text-align: center;
+  font-weight: 500;
+}
+
+/* ── Camera viewport ── */
+.scanner-viewport {
+  width: 100%;
+  max-width: 360px;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background: #050505;
+  aspect-ratio: 1 / 1;
+  border: 1.5px solid rgba(212, 175, 55, 0.4);
+  box-shadow: 0 0 40px rgba(212, 175, 55, 0.15), inset 0 0 30px rgba(212, 175, 55, 0.1);
+  animation: viewportGlow 3s infinite alternate ease-in-out;
+}
+
+@keyframes viewportGlow {
+  0% { box-shadow: 0 0 30px rgba(212, 175, 55, 0.1), inset 0 0 20px rgba(212, 175, 55, 0.05); border-color: rgba(212, 175, 55, 0.3); }
+  100% { box-shadow: 0 0 50px rgba(212, 175, 55, 0.3), inset 0 0 40px rgba(212, 175, 55, 0.15); border-color: rgba(212, 175, 55, 0.8); }
+}
+
+/* Corner guides */
+.scan-corner-guide {
+  position: absolute;
+  width: 26px;
+  height: 26px;
+  z-index: 5;
+  pointer-events: none;
+}
+.scan-corner-guide--tl { top: 12px; left: 12px; border-top: 2px solid var(--gold); border-left: 2px solid var(--gold); border-radius: 3px 0 0 0; }
+.scan-corner-guide--tr { top: 12px; right: 12px; border-top: 2px solid var(--gold); border-right: 2px solid var(--gold); border-radius: 0 3px 0 0; }
+.scan-corner-guide--bl { bottom: 12px; left: 12px; border-bottom: 2px solid var(--gold); border-left: 2px solid var(--gold); border-radius: 0 0 0 3px; }
+.scan-corner-guide--br { bottom: 12px; right: 12px; border-bottom: 2px solid var(--gold); border-right: 2px solid var(--gold); border-radius: 0 0 3px 0; }
+
+/* Scan line */
+.scan-line {
+  position: absolute;
+  left: 0; right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  z-index: 5;
+  animation: scanLine 2.2s ease-in-out infinite;
+  pointer-events: none;
+  box-shadow: 0 0 8px rgba(212,175,55,0.5);
+}
+
+/* html5-qrcode overrides */
+#qr-reader {
+  width: 100% !important;
+  height: 100% !important;
+  border: none !important;
+  background: transparent !important;
+}
+#qr-reader video {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover !important;
+  display: block !important;
+}
+#qr-reader__dashboard,
+#qr-reader__header_message,
+#qr-reader img[alt="Info icon"],
+#qr-reader__filescan_input,
+#qr-reader__status_span {
+  display: none !important;
+}
+#qr-reader__scan_region {
+  background: transparent !important;
+}
+
+/* ── Divider ── */
+.scan-divider {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  width: 100%;
+  max-width: 360px;
+}
+.scan-divider-line {
+  flex: 1;
+  height: 1px;
+  background: rgba(212,175,55,0.15);
+}
+.scan-divider-text {
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  color: #444;
+  text-transform: uppercase;
+  font-weight: 500;
+  flex-shrink: 0;
+}
+
+/* ── Upload area ── */
+.upload-area {
+  width: 100%;
+  max-width: 360px;
+  border: 1.5px dashed rgba(212,175,55,0.3);
+  border-radius: 16px;
+  padding: 28px 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  background: rgba(212,175,55,0.02);
+  position: relative;
+  overflow: hidden;
+}
+.upload-area:hover {
+  border-color: rgba(212,175,55,0.6);
+  background: rgba(212,175,55,0.05);
+  box-shadow: 0 0 20px rgba(212,175,55,0.08);
+}
+.upload-area.is-loading {
+  pointer-events: none;
+  opacity: 0.7;
+}
+
+.upload-icon-wrap {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.08);
+  border: 1px solid rgba(212,175,55,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+  flex-shrink: 0;
+}
+.upload-label {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: 0.04em;
+}
+.upload-hint {
+  font-size: 0.75rem;
+  color: #555;
+  letter-spacing: 0.05em;
+}
+
+/* Hidden file input */
+.hidden-file-input {
+  display: none;
+}
+
+/* ── Messages ── */
+.scan-messages {
+  width: 100%;
+  max-width: 360px;
+}
+
+/* ── Loading / permission / error states ── */
+.permission-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 18px;
+  padding: 40px 24px;
+  text-align: center;
+  max-width: 320px;
+}
+.permission-icon {
+  width: 68px;
+  height: 68px;
+  border-radius: 50%;
+  background: rgba(212,175,55,0.08);
+  border: 1.5px solid rgba(212,175,55,0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--gold);
+}
+.permission-box h3 {
+  font-family: 'Inter', sans-serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #fff;
+}
+.permission-box p {
+  font-size: 0.84rem;
+  color: #555;
+  line-height: 1.65;
+}
+
+.loading-box {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+  padding: 40px;
+}
+.loading-box p {
+  font-size: 0.82rem;
+  color: #555;
+  letter-spacing: 0.08em;
+}
+
+.spinner-ring {
+  width: 44px;
+  height: 44px;
+  border: 2.5px solid rgba(212,175,55,0.12);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: rotate 0.85s linear infinite;
+}
