@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import './HomePage.css';
-import { Camera, Mail, Lock, X, Menu } from 'lucide-react';
+import { Camera, Mail, Lock, X, Menu, PlayCircle, Smartphone, Award, Share2, Frame } from 'lucide-react';
 
-/* ── Icons ── */
+/* ── Custom SVG Icons ── */
 const ScanIcon = () => (
   <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
     <path d="M3 7V5a2 2 0 0 1 2-2h2"/>
@@ -35,22 +35,14 @@ const YouTubeIcon = () => (
   </svg>
 );
 
-const OrderIcon = () => (
-  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-    <circle cx="9" cy="21" r="1"/>
-    <circle cx="20" cy="21" r="1"/>
-    <path d="M1 1h4l2.68 13.39a2 2 0 0 0 2 1.61h9.72a2 2 0 0 0 2-1.61L23 6H6"/>
-  </svg>
-);
-
 export default function HomePage() {
   const navigate = useNavigate();
   const [scrolled, setScrolled] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
-  const [authMode, setAuthMode] = useState('login'); // 'login' or 'signup'
+  const [authMode, setAuthMode] = useState('login');
 
-  // Handle sticky navbar background on scroll
+  // Handle sticky navbar background
   useEffect(() => {
     const handleScroll = () => {
       setScrolled(window.scrollY > 50);
@@ -95,12 +87,11 @@ export default function HomePage() {
         {/* Desktop Links */}
         <div className="nav-links desktop-only">
           <a href="#home" className="nav-link" onClick={(e) => scrollToSection(e, 'home')}>Home</a>
-          <button className="nav-link" onClick={() => navigate('/scan')}>Scan QR</button>
           <a href="#order" className="nav-link" onClick={(e) => scrollToSection(e, 'order')}>Order Now</a>
+          <button className="nav-link" onClick={() => navigate('/scan')}>Scan QR</button>
           <a href="#contact" className="nav-link" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a>
           <div className="nav-divider" />
           <button className="nav-link" onClick={() => openAuthModal('login')}>Login</button>
-          <button className="btn-gold-outline nav-btn" onClick={() => openAuthModal('signup')}>Sign In</button>
         </div>
 
         {/* Mobile Hamburger Button */}
@@ -112,12 +103,11 @@ export default function HomePage() {
         <div className={`mobile-menu ${isMenuOpen ? 'open' : ''}`}>
           <div className="mobile-menu-content">
             <a href="#home" className="mobile-link" onClick={(e) => scrollToSection(e, 'home')}>Home</a>
-            <button className="mobile-link" onClick={() => { navigate('/scan'); closeMenu(); }}>Scan QR</button>
             <a href="#order" className="mobile-link" onClick={(e) => scrollToSection(e, 'order')}>Order Now</a>
+            <button className="mobile-link" onClick={() => { navigate('/scan'); closeMenu(); }}>Scan QR</button>
             <a href="#contact" className="mobile-link" onClick={(e) => scrollToSection(e, 'contact')}>Contact</a>
             <div className="mobile-divider" />
             <button className="mobile-link" onClick={() => openAuthModal('login')}>Login</button>
-            <button className="btn-gold-gradient" style={{ width: '100%', marginTop: '16px' }} onClick={() => openAuthModal('signup')}>Sign In</button>
           </div>
         </div>
       </nav>
@@ -162,21 +152,22 @@ export default function HomePage() {
 
       {/* ── Hero Section ── */}
       <section id="home" className="hero-section center-layout">
+        {/* Rotating Floral Design */}
+        <img src="/gold-floral.png" alt="" className="rotating-floral-bg" />
+
         <div className="hero-content-centered animate-fadeInUp">
           <div className="hero-brand-pill">MEMORIS</div>
           <h1 className="hero-title-centered">
-            Travel back to your <span className="text-gold-glow">moments</span>
+            Your Memories, <br />
+            <span className="text-gold-glow">Framed Forever</span>
           </h1>
-          <p className="hero-subtitle-centered">
-            Scan. Relive. Forever.
-          </p>
+          <p className="hero-subtitle-centered">Scan. Relive. Share.</p>
           <p className="hero-desc-centered">
-            Point your camera at a Memoris frame and relive your memories instantly.
+            Point your camera at a Memoris frame and relive your favorite memories instantly.
           </p>
           <div className="hero-buttons">
             <button className="btn-gold-gradient hover-scale" onClick={(e) => scrollToSection(e, 'order')}>
-              <OrderIcon />
-              Order Now
+              Order Your Frame
             </button>
             <button className="btn-gold-outline hover-scale" onClick={() => navigate('/scan')}>
               <ScanIcon />
@@ -186,21 +177,49 @@ export default function HomePage() {
         </div>
       </section>
 
+
+
+      {/* ── Why Choose Memoris ── */}
+      <section id="why-choose-us" className="why-section">
+        <div className="section-container">
+          <h2 className="section-title text-center animate-fadeInUp">Why Choose Memoris</h2>
+          <div className="title-underline animate-fadeInUp delay-1" />
+          
+          <div className="card-grid">
+            <div className="feature-card animate-fadeInUp delay-1">
+              <div className="card-icon"><Frame size={28} /></div>
+              <h3>Premium Frames</h3>
+              <p>Crafted with high-quality materials and a matte finish for a luxury look.</p>
+            </div>
+            <div className="feature-card animate-fadeInUp delay-2">
+              <div className="card-icon"><PlayCircle size={28} /></div>
+              <h3>Embedded Videos</h3>
+              <p>We seamlessly link your favorite videos permanently to your physical frame.</p>
+            </div>
+            <div className="feature-card animate-fadeInUp delay-3">
+              <div className="card-icon"><Share2 size={28} /></div>
+              <h3>Easy Sharing</h3>
+              <p>Anyone who scans your frame can view the memory instantly, no app needed.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
       {/* ── Order Section ── */}
       <section id="order" className="order-section">
         <div className="section-container text-center animate-fadeInUp">
-          <h2 className="section-title">Order Your Custom Memory Frame</h2>
+          <h2 className="section-title">Order Your Custom Frame</h2>
           <div className="title-underline" />
           <p className="section-desc">
-            Transform your favorite memories into premium physical frames. Our physical frames hold a custom QR code that instantly brings your video memories to life on any smartphone.
+            Transform your favorite memories into premium physical frames that come alive.
           </p>
           <div className="order-card">
             <div className="order-icon-wrap">
-              <OrderIcon />
+              <Award size={32} />
             </div>
             <h3>Premium Memoris Frame</h3>
-            <p>High-quality print · Matte finish · Custom embedded QR</p>
-            <a href="#" className="btn-gold-gradient hover-scale" style={{ textDecoration: 'none', marginTop: '24px' }}>
+            <p style={{ color: '#a0a0a0', marginBottom: '32px' }}>High-quality print · Matte finish · Custom embedded QR</p>
+            <a href="#" className="btn-gold-gradient hover-scale" style={{ textDecoration: 'none' }}>
               <WhatsAppIcon /> Order on WhatsApp
             </a>
           </div>
@@ -217,13 +236,13 @@ export default function HomePage() {
           </p>
           
           <div className="social-links">
-            <a href="#" className="social-icon-btn whatsapp" aria-label="WhatsApp" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="social-icon-btn whatsapp" aria-label="WhatsApp">
               <WhatsAppIcon />
             </a>
-            <a href="#" className="social-icon-btn instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="social-icon-btn instagram" aria-label="Instagram">
               <InstagramIcon />
             </a>
-            <a href="#" className="social-icon-btn youtube" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
+            <a href="#" className="social-icon-btn youtube" aria-label="YouTube">
               <YouTubeIcon />
             </a>
           </div>
