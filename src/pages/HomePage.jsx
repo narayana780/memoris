@@ -239,10 +239,10 @@ export default function HomePage() {
             <a href="#" className="social-icon-btn whatsapp" aria-label="WhatsApp">
               <WhatsAppIcon />
             </a>
-            <a href="#" className="social-icon-btn instagram" aria-label="Instagram">
+            <a href="https://www.instagram.com/memoris.co/?hl=en" className="social-icon-btn instagram" aria-label="Instagram" target="_blank" rel="noopener noreferrer">
               <InstagramIcon />
             </a>
-            <a href="#" className="social-icon-btn youtube" aria-label="YouTube">
+            <a href="https://www.youtube.com/channel/UCPwHq_-0Ue6DJwDKHRg3QHw" className="social-icon-btn youtube" aria-label="YouTube" target="_blank" rel="noopener noreferrer">
               <YouTubeIcon />
             </a>
           </div>
