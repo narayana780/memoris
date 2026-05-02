@@ -33,15 +33,27 @@ export default function WatchPage() {
   if (!videoId || videoId.trim() === '') {
     return (
       <div className="watch-page animate-fadeIn">
+        {/* Gold particles background */}
+        <div className="particles-container">
+          <div className="particle"></div>
+          <div className="particle"></div>
+          <div className="particle"></div>
+        </div>
+        
         <WatchHeader navigate={navigate} />
         <div className="watch-stage">
           <div className="watch-error animate-fadeInUp">
             <div className="watch-error-icon"><ErrorIcon /></div>
-            <h3>Video Not Found</h3>
+            <h3>Memory not found</h3>
             <p>No video ID was provided. Please scan a valid Memoris frame.</p>
-            <button className="btn-primary" onClick={() => navigate('/scan')}>
-              <ScanAgainIcon /> Scan Again
-            </button>
+            <div className="watch-actions" style={{ marginTop: '20px' }}>
+              <button className="btn-secondary" onClick={() => navigate('/')}>
+                <BackIcon /> Home
+              </button>
+              <button className="btn-primary scan-again-stable" onClick={() => navigate('/scan')}>
+                <ScanAgainIcon /> Scan Again
+              </button>
+            </div>
           </div>
         </div>
       </div>
@@ -52,13 +64,25 @@ export default function WatchPage() {
 
   return (
     <div className="watch-page animate-fadeIn">
+      {/* Gold particles background */}
+      <div className="particles-container">
+        <div className="particle"></div>
+        <div className="particle"></div>
+        <div className="particle"></div>
+        <div className="particle"></div>
+        <div className="particle"></div>
+      </div>
+
       <WatchHeader navigate={navigate} />
 
       <div className="watch-stage">
+        {/* Radial glow behind video */}
+        <div className="watch-stage-glow"></div>
+
         {/* Now playing pill */}
         <div className="video-id-pill animate-fadeInUp delay-1">
           <span className="video-id-dot" />
-          Now Playing · Frame Memory
+          NOW PLAYING · FRAME MEMORY
         </div>
 
         {/* Video player with gold border */}
@@ -85,14 +109,17 @@ export default function WatchPage() {
           </div>
         </div>
 
-        {/* Action buttons */}
-        <div className="watch-actions">
-          <button className="btn-secondary" onClick={() => navigate('/')}>
-            <BackIcon /> Home
-          </button>
-          <button className="btn-primary scan-again-stable" onClick={() => navigate('/scan')}>
-            <ScanAgainIcon /> Scan Another Frame
-          </button>
+        {/* Action buttons & subtitle */}
+        <div className="watch-actions-wrapper animate-fadeInUp delay-3">
+          <p className="watch-subtitle">Relive your moment, beautifully preserved.</p>
+          <div className="watch-actions">
+            <button className="btn-secondary" onClick={() => navigate('/')}>
+              <BackIcon /> Home
+            </button>
+            <button className="btn-primary scan-again-stable" onClick={() => navigate('/scan')}>
+              <ScanAgainIcon /> Scan Another Frame
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -102,14 +129,17 @@ export default function WatchPage() {
 /* ── Shared header ── */
 function WatchHeader({ navigate }) {
   return (
-    <header className="watch-header">
-      <button className="btn-icon" onClick={() => navigate(-1)} aria-label="Go back" style={{ color: 'var(--gold)' }}>
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-          <path d="M19 12H5M12 5l-7 7 7 7"/>
-        </svg>
-      </button>
-      <span className="watch-header-brand">MEMORIS</span>
-      <div style={{ width: 40 }} />
-    </header>
+    <div className="watch-header-container">
+      <header className="watch-header">
+        <button className="btn-icon header-back-btn" onClick={() => navigate(-1)} aria-label="Go back">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+            <path d="M19 12H5M12 5l-7 7 7 7"/>
+          </svg>
+        </button>
+        <span className="watch-header-brand">MEMORIS</span>
+        <div style={{ width: 44 }} /> {/* Spacer to center the logo */}
+      </header>
+      <div className="header-divider"></div>
+    </div>
   );
 }

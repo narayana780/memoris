@@ -124,11 +124,11 @@ export default function ScanPage() {
     try {
       // Use a temp Html5Qrcode instance for file scanning
       const tempQr = new Html5Qrcode('qr-file-scanner');
-      const decoded = await tempQr.scanFile(file, /* showImage= */ false);
+      const decoded = await tempQr.scanFile(file, true);
       tempQr.clear();
       await handleDecoded(decoded);
     } catch (err) {
-      showError('No valid QR code found in the image.');
+      showError('Unable to read QR code. Please upload a clear QR image.');
     } finally {
       if (mountedRef.current) setUploadLoading(false);
     }
@@ -235,7 +235,7 @@ export default function ScanPage() {
         <input
           ref={fileInputRef}
           type="file"
-          accept="image/*"
+          accept="image/png, image/jpeg, image/jpg, image/webp"
           className="hidden-file-input"
           onChange={handleFileChange}
           id="qr-upload-input"
@@ -257,7 +257,7 @@ export default function ScanPage() {
             {uploadLoading ? <div className="spinner-ring" style={{ width: 26, height: 26 }} /> : <UploadIcon />}
           </div>
           <span className="upload-label">
-            {uploadLoading ? 'Scanning image…' : 'Upload QR Code'}
+            {uploadLoading ? 'Reading QR code...' : 'Upload QR Code'}
           </span>
           <span className="upload-hint">JPG, PNG, WEBP · from Camera Roll or Files</span>
         </div>
